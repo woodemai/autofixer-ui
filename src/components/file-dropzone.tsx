@@ -1,19 +1,23 @@
 "use client";
 
-import { FileIcon, Loader2 } from "lucide-react";
+import { PutBlobResult } from "@vercel/blob";
+import { ClipboardCopyIcon, FileIcon, Loader2 } from "lucide-react";
 import { useCallback, useState, useTransition } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadFile } from "~/actions/file";
 import { useToast } from "~/hooks/use-toast";
+import { Button } from "./ui/button";
 
 export const FileDropzone = () => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     startTransition(async () => {
       try {
         if (acceptedFiles[0]) {
-          await uploadFile(acceptedFiles[0]);
+          const response = await uploadFile(acceptedFiles[0]);
+          setBlob(response);
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -36,7 +40,25 @@ export const FileDropzone = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
+    accept: {
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['xlsx'],
+      'application/xml': ['xml'],
+    }
   });
+
+  const handleCopy = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      if (blob) {
+        navigator.clipboard.writeText(blob.url);
+        toast({
+          title: "Ссылка скопирована",
+          description: "Скопирована в буфер обмена",
+        });
+      }
+    },
+    [blob, toast],
+  );
 
   return (
     <div
@@ -51,6 +73,16 @@ export const FileDropzone = () => {
         <p>Drag 'n' drop some files here, or click to select files</p>
       )}
       {isPending && <Loader2 className="size-4 animate-spin" />}
+      {blob && (
+        <div className="flex w-fit items-center gap-2">
+          <span className="truncate w-40 hover:underline underline-offset-4">
+            {blob.url}
+          </span>
+          <Button className="z-50" onClick={handleCopy} size="icon" variant="secondary">
+            <ClipboardCopyIcon className="size-4" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

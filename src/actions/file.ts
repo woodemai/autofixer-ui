@@ -1,12 +1,9 @@
 "use server";
 
-import axios from "axios";
-import { env } from "~/env";
+import { put, PutBlobResult } from "@vercel/blob";
 
-export const uploadFile = async (file: File) => {
-  return axios.post(`${env.API_URL}/upload`, file, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+export const uploadFile = async (file: File): Promise<PutBlobResult> => {
+  return put(file.name, file, {
+    access: "public",
   });
 };
