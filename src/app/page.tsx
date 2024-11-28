@@ -9,6 +9,10 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const runtime = "nodejs";
+
 export default function HomePage() {
   return (
     <div className="flex h-dvh w-full items-center justify-center">

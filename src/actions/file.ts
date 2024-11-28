@@ -15,14 +15,14 @@ export const uploadFile = async (file: File) => {
       xmlContent,
       {
         headers: {
-          "Content-Type": "text/xml", // Inform the server about the payload type
+          "Content-Type": "text/xml", 
         },
       },
     );
 
     console.log("Response from API:", response.data);
 
-    return response.data; // Return the API response (e.g., converted JSON)
+    return response.data; 
   } catch (error) {
     console.error("Error uploading file:", error);
     throw new Error("Failed to upload file");
