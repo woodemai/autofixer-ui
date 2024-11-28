@@ -41,9 +41,11 @@ export const FileDropzone = () => {
     onDrop,
     maxFiles: 1,
     accept: {
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['xlsx'],
-      'application/xml': ['xml'],
-    }
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        "xlsx",
+      ],
+      "application/xml": ["xml"],
+    },
   });
 
   const handleCopy = useCallback(
@@ -75,10 +77,15 @@ export const FileDropzone = () => {
       {isPending && <Loader2 className="size-4 animate-spin" />}
       {blob && (
         <div className="flex w-fit items-center gap-2">
-          <span className="truncate w-40 hover:underline underline-offset-4">
+          <span className="w-40 truncate underline-offset-4 hover:underline">
             {blob.url}
           </span>
-          <Button className="z-50" onClick={handleCopy} size="icon" variant="secondary">
+          <Button
+            className="z-50"
+            onClick={handleCopy}
+            size="icon"
+            variant="secondary"
+          >
             <ClipboardCopyIcon className="size-4" />
           </Button>
         </div>
