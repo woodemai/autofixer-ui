@@ -43,13 +43,13 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/eslint": "^9.6.1",
+    "@types/eslint": "^8.56.10",
     "@types/node": "^20.17.8",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
-    "eslint": "^9.15.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "15.0.4-canary.30",
     "postcss": "^8.4.49",
     "prettier": "^3.4.1",

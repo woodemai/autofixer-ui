@@ -5,7 +5,7 @@ const config = {
     "project": true
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint/eslint"
   ],
   "extends": [
     "next/core-web-vitals",
