@@ -24,8 +24,7 @@ export default function HomePage() {
             <DialogContent className="p-4">
               <DialogTitle>Загрузка данных</DialogTitle>
               <DialogDescription>
-                Перетащите файл <code>xml</code> или <code>xlsx</code> в область
-                ниже
+                Перетащите файл <code>xml</code> в область ниже
               </DialogDescription>
               <FileDropzone />
             </DialogContent>

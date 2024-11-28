@@ -1,18 +1,21 @@
 "use client";
 
 import { PutBlobResult } from "@vercel/blob";
-import { ClipboardCopyIcon, FileIcon, Loader2 } from "lucide-react";
+import { ClipboardCopyIcon, FileIcon } from "lucide-react";
 import { useCallback, useState, useTransition } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadFile } from "~/actions/file";
 import { useToast } from "~/hooks/use-toast";
 import { Button } from "./ui/button";
+import { Spinner } from "./spinner";
 
 export const FileDropzone = () => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    console.log(acceptedFiles);
+
     startTransition(async () => {
       try {
         if (acceptedFiles[0]) {
@@ -40,12 +43,6 @@ export const FileDropzone = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
-    accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        "xlsx",
-      ],
-      "application/xml": ["xml"],
-    },
   });
 
   const handleCopy = useCallback(
@@ -74,7 +71,7 @@ export const FileDropzone = () => {
       ) : (
         <p>Drag 'n' drop some files here, or click to select files</p>
       )}
-      {isPending && <Loader2 className="size-4 animate-spin" />}
+      {isPending && <Spinner />}
       {blob && (
         <div className="flex w-fit items-center gap-2">
           <span className="w-40 truncate underline-offset-4 hover:underline">
